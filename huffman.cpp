@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -29,16 +30,32 @@ class Huffman {
                     this->zero = left;
                     this->one = right;
                 }
+                bool operator<(const Node& other) {
+                    return this->weight < other.weight;
+                }
+                bool operator>(const Node& other) {
+                    return this->weight > other.weight;
+                }
         };
 
         Node generate_huffman_tree() {
-            vector<Node> sorted_chars;
+            priority_queue<Node, vector<Node>, greater<Node>> nodes_queue;
             for (const auto& entry: char_counts) {
-                sorted_chars.push_back(Node(entry.first, entry.second, nullptr, nullptr));
+                Node curr_node = Node(entry.first, entry.second, nullptr, nullptr);
+                nodes_queue.push(curr_node);
             }
-            sort(sorted_chars.begin(), sorted_chars.end(), [&](Node n1, Node n2) {
-                return char_counts[n1.val] < char_counts[n2.val];
-            });
-            Node* curr_smallest = nullptr;
+            Node lowest_weight = nodes_queue.top();
+            nodes_queue.pop();
+            while (nodes_queue.size() > 1) {
+                Node smallest1 = nodes_queue.top();
+                nodes_queue.pop();
+                Node smallest2 = nodes_queue.top();
+                nodes_queue.pop();
+                Node lowest_combined = Node(
+                    char(0), smallest1.weight + smallest2.weight, &smallest2, &smallest1
+                );
+                nodes_queue.push(lowest_combined);
+            }
+            return nodes_queue.top();
         }
 };
