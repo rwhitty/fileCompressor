@@ -58,4 +58,19 @@ class Huffman {
             }
             return nodes_queue.top();
         }
+
+        unordered_map<char, string> generate_huffman_map(Node huffman_tree) {
+            unordered_map<char, string> huffman_map;
+            dfs_explore(huffman_tree, "", huffman_map);
+            return huffman_map;
+        }
+
+        void dfs_explore(Node start, string bits, unordered_map<char, string> huffman_map) {
+            if (start.zero == nullptr && start.one == nullptr) {
+                huffman_map[start.val] = bits;
+            } else {
+                dfs_explore(*start.zero, bits + "0", huffman_map);
+                dfs_explore(*start.one, bits + "1", huffman_map);
+            }
+        }
 };
