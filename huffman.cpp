@@ -7,7 +7,10 @@ using namespace std;
 class Huffman {
     public:
         unordered_map<char, int> char_counts;
+        string file_contents;
+
         Huffman(string& file_contents) {
+            this->file_contents = file_contents;
             for (char& c: file_contents) {
                 if (char_counts.count(c)) {
                     char_counts[c] += 1;
@@ -15,6 +18,16 @@ class Huffman {
                     char_counts[c] = 1;
                 }
             }
+        }
+
+        string final_bitstring() {
+            Node huffman_tree = generate_huffman_tree();
+            unordered_map<char, string> huffman_map = generate_huffman_map(huffman_tree);
+            string return_string;
+            for (char& c: file_contents) {
+                return_string += huffman_map[c];
+            }
+            return return_string;
         }
 
     private:    
