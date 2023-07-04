@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include "huffman.h"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ int main() {
     while (getline(file, line)) {
         text_contents += line;
     }
-    cout << text_contents << "\n";
+    Huffman file_huffman = Huffman(text_contents);
+    //string bitstring = file_huffman.final_bitstring();
+    //cout << bitstring;
     return 0;
 }
