@@ -18,7 +18,7 @@ class Huffman {
                 double weight;
                 Node* zero;
                 Node* one;
-                Node(char val, double weight, Node* left, Node* right);
+                Node(char val, int weight, Node* left, Node* right);
                 bool operator<(const Node& other) const;
                 bool operator>(const Node& other) const;
         };
