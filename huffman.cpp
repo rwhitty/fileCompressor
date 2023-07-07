@@ -7,7 +7,8 @@ using namespace std;
 
 Huffman::Huffman(string& file_contents) {
     this->file_contents = file_contents;
-    for (char& c: file_contents) {
+    for (int i = 0; i < file_contents.length(); i++) {
+        char c = file_contents[i];
         if (char_counts.count(c)) {
             char_counts[c] += 1;
         } else {
@@ -20,7 +21,9 @@ string Huffman::final_bitstring() {
     Node huffman_tree = generate_huffman_tree();
     unordered_map<char, string> huffman_map = generate_huffman_map(huffman_tree);
     string return_string;
-    for (char& c: file_contents) {
+    cout << file_contents << "\n";
+    for (int i = 0; i < file_contents.length(); i++) {
+        char c = file_contents[i];
         return_string += huffman_map[c];
     }
     return return_string;
@@ -42,22 +45,18 @@ bool Huffman::Node::operator>(const Node& other) const {
 }
 
 Huffman::Node Huffman::generate_huffman_tree() {
-    priority_queue<Node, vector<Node>, greater<Node>> nodes_queue;
+    priority_queue<Node, vector<Node>, greater<Node> > nodes_queue;
     for (const auto& entry: char_counts) {
         Node curr_node = Node(entry.first, entry.second, nullptr, nullptr);
         nodes_queue.push(curr_node);
     }
-    Node lowest_weight = nodes_queue.top();
-    nodes_queue.pop();
     while (nodes_queue.size() > 1) {
-        Node smallest1 = nodes_queue.top();
+        Node* smallest1 = new Node(nodes_queue.top());
         nodes_queue.pop();
-        cout << "test1: " << smallest1.val << smallest1.weight << "\n";
-        Node smallest2 = nodes_queue.top();
+        Node* smallest2 = new Node(nodes_queue.top());
         nodes_queue.pop();
-        cout << "test2: " << smallest2.val << smallest2.weight << "\n";
         Node lowest_combined = Node(
-            char(0), smallest1.weight + smallest2.weight, &smallest2, &smallest1
+            char(0), smallest1->weight + smallest2->weight, smallest2, smallest1
         );
         nodes_queue.push(lowest_combined);
     }
