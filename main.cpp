@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<json/json.h>
 #include "huffman.h"
 
 using namespace std;
