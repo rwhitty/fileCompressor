@@ -6,7 +6,9 @@
 using namespace std;
 
 Huffman::Huffman(string& file_contents) {
+
     this->file_contents = file_contents;
+
     for (int i = 0; i < file_contents.length(); i++) {
         char c = file_contents[i];
         if (char_counts.count(c)) {
@@ -18,13 +20,16 @@ Huffman::Huffman(string& file_contents) {
 }
 
 string Huffman::final_bitstring() {
+
     Node huffman_tree = generate_huffman_tree();
     unordered_map<char, string> huffman_map = generate_huffman_map(huffman_tree);
     string return_string;
+
     for (int i = 0; i < file_contents.length(); i++) {
         char c = file_contents[i];
         return_string += huffman_map[c];
     }
+
     return return_string;
 }
 
@@ -44,11 +49,14 @@ bool Huffman::Node::operator>(const Node& other) const {
 }
 
 Huffman::Node Huffman::generate_huffman_tree() {
+
     priority_queue<Node, vector<Node>, greater<Node> > nodes_queue;
+
     for (const auto& entry: char_counts) {
         Node curr_node = Node(entry.first, entry.second, nullptr, nullptr);
         nodes_queue.push(curr_node);
     }
+
     while (nodes_queue.size() > 1) {
         Node* smallest1 = new Node(nodes_queue.top());
         nodes_queue.pop();
@@ -59,6 +67,7 @@ Huffman::Node Huffman::generate_huffman_tree() {
         );
         nodes_queue.push(lowest_combined);
     }
+
     return nodes_queue.top();
 }
 
