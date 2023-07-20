@@ -11,6 +11,7 @@ class Huffman {
         string file_contents;
         Huffman(string& file_contents);
         string final_bitstring();
+        unordered_map<char, string> decoder;
         
     private:
         class Node {

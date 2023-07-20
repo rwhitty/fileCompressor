@@ -22,12 +22,12 @@ Huffman::Huffman(string& file_contents) {
 string Huffman::final_bitstring() {
 
     Node huffman_tree = generate_huffman_tree();
-    unordered_map<char, string> huffman_map = generate_huffman_map(huffman_tree);
+    this->decoder = generate_huffman_map(huffman_tree);
     string return_string;
 
     for (int i = 0; i < file_contents.length(); i++) {
         char c = file_contents[i];
-        return_string += huffman_map[c];
+        return_string += decoder[c];
     }
 
     return return_string;

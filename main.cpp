@@ -34,12 +34,15 @@ int main() {
     cout << "Please type the desired path of the compressed file: ";
     cin >> compressed_filepath;
 
-    write_to_file(bitstring, compressed_filepath);
+    write_bits(bitstring, compressed_filepath);
+
+    unordered_map<char, string> decoder = file_huffman.decoder;
+    write_decoder(decoder, compressed_filepath);
 
     return 0;
 }
 
-void write_to_file(const string& bits, const string& filename) {
+void write_bits(const string& bits, const string& filename) {
 
     ofstream file(filename, ios::binary);
 
@@ -68,7 +71,20 @@ void write_to_file(const string& bits, const string& filename) {
 
         bytes.push_back(byte);
     }
-    
+
     file.write(bytes.data(), bytes.size());
     file.close();
+}
+
+void write_decoder(const unordered_map<char, string>& decoder, string file_prefix) {
+
+    string decode_string = "";
+
+    for (const auto& encoding: decoder) {
+        decode_string += encoding.second + ": " + encoding.first + "\n";
+    }
+
+    ofstream decode_file(file_prefix + "_decoder.txt");
+    decode_file << decode_string;
+    decode_file.close();
 }
