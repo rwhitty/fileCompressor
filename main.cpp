@@ -5,13 +5,14 @@
 
 using namespace std;
 
-void write_to_file(const string& bits, const string& filename);
+void write_bits(const string& bits, const string& filename);
+
+void write_decoder(const unordered_map<char, string>& decoder, string file_prefix);
 
 int main() {
 
     string filepath;
 
-    cout << "Please type the absolute path of your file: ";
     cin >> filepath;
 
     ifstream file(filepath);
@@ -31,7 +32,6 @@ int main() {
     string bitstring = file_huffman.final_bitstring();
     string compressed_filepath;
 
-    cout << "Please type the desired path of the compressed file: ";
     cin >> compressed_filepath;
 
     write_bits(bitstring, compressed_filepath);
@@ -84,7 +84,7 @@ void write_decoder(const unordered_map<char, string>& decoder, string file_prefi
         decode_string += encoding.second + ": " + encoding.first + "\n";
     }
 
-    ofstream decode_file(file_prefix + "_decoder.txt");
+    ofstream decode_file(file_prefix.substr(0, file_prefix.length() - 4) + "_decoder.txt");
     decode_file << decode_string;
     decode_file.close();
 }
