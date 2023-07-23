@@ -50,7 +50,7 @@ bool Huffman::Node::operator>(const Node& other) const {
 
 Huffman::Node Huffman::generate_huffman_tree() {
 
-    priority_queue<Node, vector<Node>, greater<Node> > nodes_queue;
+    priority_queue<Node, vector<Node>, greater<Node>> nodes_queue;
 
     for (const auto& entry: char_counts) {
         Node curr_node = Node(entry.first, entry.second, nullptr, nullptr);

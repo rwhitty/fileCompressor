@@ -8,10 +8,6 @@ echo What is the location where you want the compressed file?
 
 read location
 
-echo $filepath
+g++ -std=c++11 encode.cpp huffman.cpp
 
-echo $location
-
-g++ -std=c++11 main.cpp huffman.cpp
-
-echo -e "$filepath\n$location" | ./a.out > /dev/null
+(echo "$filepath"; echo "$location") | ./a.out > /dev/null
