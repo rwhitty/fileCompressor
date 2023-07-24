@@ -10,6 +10,7 @@ class Unhuffman {
         Unhuffman(string bits, string decoder);
         string final_text();
         string bits;
+        string decoder;
 
     private:
         unordered_map<string, char> decompress_map();

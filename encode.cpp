@@ -28,6 +28,8 @@ int main() {
         text_contents += line;
     }
 
+    file.close();
+
     Huffman file_huffman = Huffman(text_contents);
     string bitstring = file_huffman.final_bitstring();
     string compressed_filepath;
