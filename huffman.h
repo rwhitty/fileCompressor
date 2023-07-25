@@ -27,6 +27,7 @@ class Huffman {
         Node generate_huffman_tree();
         unordered_map<char, string> generate_huffman_map(Node& huffman_tree);
         void dfs_explore(Node start, string bits, unordered_map<char, string>& huffman_map);
+        void count_chars(int start, int end, unordered_map<char, int>* local_counts);
 };
 
 #endif

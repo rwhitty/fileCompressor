@@ -2,6 +2,7 @@
 #include <string>
 #include <queue>
 #include "huffman.h"
+#include <thread>
 
 using namespace std;
 
@@ -9,13 +10,36 @@ Huffman::Huffman(string& file_contents) {
 
     this->file_contents = file_contents;
 
-    for (int i = 0; i < file_contents.length(); i++) {
-        char c = file_contents[i];
-        if (char_counts.count(c)) {
-            char_counts[c] += 1;
-        } else {
-            char_counts[c] = 1;
+    int num_threads = thread::hardware_concurrency();
+
+    vector<unordered_map<char, int>> small_counts(num_threads);
+    vector<thread> threads;
+    
+    int chunkSize = file_contents.length() / num_threads;
+    int remainder = file_contents.length() % num_threads;
+    int start = 0;
+
+    for (int i = 0; i < num_threads; i++) {
+        int end = start + chunkSize + (i < remainder ? 1 : 0);
+        threads.emplace_back(&Huffman::count_chars, this, start, end, &small_counts[i]);
+        start = end;
+    }
+
+    for (auto& thread : threads) {
+        thread.join();
+    }
+
+    for (const auto& local_map : small_counts) {
+        for (const auto& entry : local_map) {
+            char_counts[entry.first] += entry.second;
         }
+    }
+}
+
+void Huffman::count_chars(int start, int end, unordered_map<char, int>* local_counts) {
+    for (int i = start; i < end; i++) {
+        char c = this->file_contents[i];
+        (*local_counts)[c] += 1;
     }
 }
 
