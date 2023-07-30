@@ -7,7 +7,7 @@ using namespace std;
 
 void write_bits(const string& bits, const string& filename);
 
-void write_decoder(const unordered_map<char, string>& decoder, string file_prefix);
+void write_decoder(const unordered_map<char, string>& decoder, const string& file_prefix);
 
 int main() {
 
@@ -36,17 +36,22 @@ int main() {
 
     cin >> compressed_filepath;
 
-    write_bits(bitstring, compressed_filepath);
+    string new_name = filepath.substr(
+        filepath.find_last_of("/"),
+        filepath.find_last_of(".") - filepath.find_last_of("/")
+    );
+
+    write_bits(bitstring, compressed_filepath + new_name);
 
     unordered_map<char, string> decoder = file_huffman.decoder;
-    write_decoder(decoder, compressed_filepath);
+    write_decoder(decoder, compressed_filepath + new_name);
 
     return 0;
 }
 
 void write_bits(const string& bits, const string& filename) {
 
-    ofstream file(filename, ios::binary);
+    ofstream file(filename + "_compressed.bin", ios::binary);
 
     if (!file.good()) {
         throw invalid_argument("Invalid filepath.");
@@ -78,7 +83,7 @@ void write_bits(const string& bits, const string& filename) {
     file.close();
 }
 
-void write_decoder(const unordered_map<char, string>& decoder, string file_prefix) {
+void write_decoder(const unordered_map<char, string>& decoder, const string& file_prefix) {
 
     string decode_string = "";
 
@@ -86,7 +91,7 @@ void write_decoder(const unordered_map<char, string>& decoder, string file_prefi
         decode_string += encoding.second + ": " + encoding.first + "\n";
     }
 
-    ofstream decode_file(file_prefix.substr(0, file_prefix.length() - 4) + "_decoder.txt");
+    ofstream decode_file(file_prefix + "_decoder.txt");
     decode_file << decode_string;
     decode_file.close();
 }
