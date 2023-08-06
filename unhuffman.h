@@ -16,5 +16,4 @@ class Unhuffman {
         unordered_map<string, char> decompress_map();
 };
 
-
 #endif
