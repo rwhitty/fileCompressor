@@ -26,6 +26,7 @@ int main() {
 
     while (getline(file, line)) {
         text_contents += line;
+        text_contents += "\n";
     }
 
     file.close();

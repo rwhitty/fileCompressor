@@ -15,4 +15,4 @@ set +x
 
 g++ -std=c++11 decode.cpp unhuffman.cpp
 
-(echo "$raw_bits"; echo "$decoder"; echo "$location") | ./a.out > /dev/null
+(echo "$decoder"; echo "$raw_bits"; echo "$location") | ./a.out > /dev/null

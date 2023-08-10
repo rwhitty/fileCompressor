@@ -26,6 +26,7 @@ int main() {
 
     while (getline(decode_file, line)) {
         decoder_contents += line;
+        decoder_contents += "|";
     }
 
     decode_file.close();

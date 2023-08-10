@@ -15,7 +15,7 @@ unordered_map<string, char> Unhuffman::decompress_map() {
     istringstream dec_stream(this->decoder);
     string line;
 
-    while (getline(dec_stream, line)) {
+    while (getline(dec_stream, line, '|')) {
         decode_lines.push_back(line);
     }
     
