@@ -24,9 +24,9 @@ int main() {
     string decoder_contents = "";
     string line;
 
-    while (getline(decode_file, line)) {
+    while (getline(decode_file, line, '|')) {
         decoder_contents += line;
-        decoder_contents += "|";
+        decoder_contents += '|';
     }
 
     decode_file.close();

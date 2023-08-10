@@ -89,7 +89,7 @@ void write_decoder(const unordered_map<char, string>& decoder, const string& fil
     string decode_string = "";
 
     for (const auto& encoding: decoder) {
-        decode_string += encoding.second + ": " + encoding.first + "\n";
+        decode_string += encoding.second + ": " + encoding.first + "|";
     }
 
     ofstream decode_file(file_prefix + "_decoder.txt");
