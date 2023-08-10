@@ -3,9 +3,11 @@
 #include<string>
 #include<sstream>
 #include<bitset>
-#include<unhuffman.h>
+#include "unhuffman.h"
 
 using namespace std;
+
+void write_original(const string& contents, const string& filepath);
 
 int main() {
 
@@ -48,6 +50,30 @@ int main() {
     compressed_file.close();
 
     string bitstring = binary_data.str();
-
     Unhuffman unhuffman = Unhuffman(bitstring, decoder_contents);
+
+    string file_text = unhuffman.final_text();
+
+    string new_name = binary_path.substr(
+        binary_path.find_last_of("/"),
+        binary_path.length() - binary_path.find_last_of("/") - 15
+    );
+
+    string decompressed_path;
+
+    cin >> decompressed_path;
+
+    write_original(file_text, decompressed_path + new_name);
+}
+
+void write_original(const string& contents, const string& filepath) {
+
+    ofstream original_file(filepath + ".txt");
+
+    if (!original_file.good()) {
+        throw invalid_argument("Invalid filepath.");
+    }
+
+    original_file << contents;
+    original_file.close();
 }

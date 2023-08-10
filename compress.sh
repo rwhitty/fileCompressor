@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-echo What is the name of the file you want to compress?
+echo What is the full path of the file you want to compress?
 
 read filepath
 
-echo What is the location where you want the compressed file?
+echo What is the full path of the location where you want the compressed file?
 
 read location
 

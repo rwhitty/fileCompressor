@@ -92,6 +92,11 @@ void write_decoder(const unordered_map<char, string>& decoder, const string& fil
     }
 
     ofstream decode_file(file_prefix + "_decoder.txt");
+
+    if (!decode_file.good()) {
+        throw invalid_argument("Invalid filepath.");
+    }
+
     decode_file << decode_string;
     decode_file.close();
 }

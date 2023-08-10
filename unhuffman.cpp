@@ -38,3 +38,25 @@ unordered_map<string, char> Unhuffman::decompress_map() {
 
     return final_map;
 }
+
+string Unhuffman::final_text() {
+
+    unordered_map<string, char> char_map = this->decompress_map();
+
+    string curr_encoding = "";
+    string final_text = "";
+
+    for (int i = 0; i < this->bits.length(); i++) {
+
+        curr_encoding += this->bits[i];
+
+        if (char_map.find(curr_encoding) != char_map.end()) {
+            final_text += char_map[curr_encoding];
+            curr_encoding = "";
+        }
+    }
+
+    cout << final_text;
+
+    return final_text;
+}
