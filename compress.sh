@@ -16,6 +16,6 @@ set +x
 mkdir "${location}/${filename}_compressed"
 dir_path="${location}/${filename}_compressed"
 
-g++ -std=c++11 encode.cpp huffman.cpp
+g++ -std=c++17 encode.cpp huffman.cpp
 
 (echo "$filepath"; echo "$dir_path") | ./a.out > /dev/null

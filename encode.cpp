@@ -2,6 +2,7 @@
 #include<fstream>
 #include<string>
 #include "huffman.h"
+#include <unordered_map>
 
 using namespace std;
 
